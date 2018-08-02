@@ -1,5 +1,13 @@
 <?php
+$from_dest = $_GET["from"];
 
+if($from_dest != "batumi" or $from_dest != "tbilisi"){
+	$echo "<form action=\'/?from=batumi\'><input type=\'submit\' value=\'Batumi-Tbilisi\'/></form>";
+	$echo "<form action=\'/?from=tbilisi\'><input type=\'submit\' value=\'Tbilisi\'/></form>";
+	return;
+}
+
+}
 require_once __DIR__ .'/vendor/autoload.php';
 use GuzzleHttp\Client;
 use Sunra\PhpSimple\HtmlDomParser;
