@@ -1,13 +1,13 @@
 <?php
-$from_dest = $_GET["from"];
-
-if($from_dest != "batumi" or $from_dest != "tbilisi"){
-	$echo "<form action=\'/?from=batumi\'><input type=\'submit\' value=\'Batumi-Tbilisi\'/></form>";
-	$echo "<form action=\'/?from=tbilisi\'><input type=\'submit\' value=\'Tbilisi\'/></form>";
+echo '<!DOCTYPE html><html>';
+if (!isset($_GET['from'])){
+	$from_dest = $_GET["from"];
+	echo '<form action=\'/\' method=\'get\'><input name=\'from\' type=\'hidden\' value=\'batumi\'><input type=\'submit\' value=\'Batumi-Tbilisi\'/></form>';
+	echo '<form action=\'/\' method=\'get\'><input name=\'from\' type=\'hidden\' value=\'tbilisi\'><input type=\'submit\' value=\'Tbilisi-Batumi\'/></form>';
+	echo '<html>';
 	return;
 }
 
-}
 require_once __DIR__ .'/vendor/autoload.php';
 use GuzzleHttp\Client;
 use Sunra\PhpSimple\HtmlDomParser;
@@ -17,6 +17,14 @@ $dt->modify('-1 day');
 $batumi = array('name' => 'ბათუმი', 'number' => '57151');
 $tbilisi = array('name' => 'თბილისი-სამგზ', 'number' => '56014');
 
+
+$from = "";
+if ($from_dest == "batumi"){
+	$from = $batumi;
+
+} else {
+	$from = $tbilisi;
+}
 //$date -> string d/m/Y 
 function getResponse($from, $to, $date, $client){
 	$res = $client->request('POST', 'https://biletebi.ge/startup.aspx?ajax=1&action=searchfortrain', [
@@ -47,3 +55,6 @@ for($i = 0; $i < 7; $i++){
 		echo $div.'<br>';
 	}
 }
+echo '<html>';
+
+?>
